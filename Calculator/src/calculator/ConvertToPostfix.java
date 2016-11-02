@@ -2,6 +2,7 @@ package calculator;
 import java.util.*;
 
 /**
+ * ConvertToPostfix.java
  * CS 480 - Vajda 
  * Lab 3 
  * Last Update: 1 November 2016
@@ -13,7 +14,7 @@ public class ConvertToPostfix {
      * Simple method that converts infix to postfix
      * 
      * @param str string representation of a prefix equation
-     * @return ArrayList of type String with seperated values 
+     * @return ArrayList of type String with separated values 
      * in post fix form
      */
     public static ArrayList<String> convertToPostfix(String str){
