@@ -5,7 +5,7 @@ import java.util.*;
  * ConvertToPostfix.java
  * CS 480 - Vajda 
  * Lab 3 
- * Last Update: 1 November 2016
+ * Last Update: 3 November 2016
  * @author Bryan Martinez
  */
 public class ConvertToPostfix {
@@ -19,7 +19,10 @@ public class ConvertToPostfix {
      */
     public static ArrayList<String> convertToPostfix(String str){
         Stack<String> stack = new Stack();
-        String[] preFix = str.split(" ");
+        String[] temp = str.split(" ");//splits on every single character
+        String temp2 = pasteLongNumbers(temp);//join single digits into numbers
+        String[] preFix = temp2.split(" ");
+        
         ArrayList<String> result = new ArrayList();
         char c;
         String value;
@@ -64,7 +67,8 @@ public class ConvertToPostfix {
                 else if(getPriority(c) < getPriority(stack.peek().charAt(0))){
                     result.add(stack.pop());
                     i -= 1;
-                }       
+                }   
+                else{}
             }
         }
 
@@ -72,6 +76,47 @@ public class ConvertToPostfix {
         while (!stack.isEmpty())
             result.add(stack.pop());
         return result;
+    }
+    
+    /**
+     * Pastes together separated digits into single strings
+     * @param exp separated string expression to evaluate
+     * @return string with correctly grouped numbers
+     */
+    public static String pasteLongNumbers(String[] exp) {
+        StringBuilder tempNum = new StringBuilder();
+        StringBuilder newExp = new StringBuilder();
+        
+        for (int i = 0; i < exp.length; i++){
+            if ((isDigit(exp[i])) && (i < exp.length-1))
+                tempNum.append(exp[i]);
+            else if (!isDigit(exp[i]) && tempNum.length() != 0){
+                newExp.append(tempNum.toString() + " ");
+                newExp.append(exp[i] + " ");
+                tempNum.delete(0, tempNum.length());
+            }
+            else if ((isDigit(exp[i])) && (i == exp.length-1))
+                newExp.append(exp[i] + " ");
+            else
+                newExp.append(exp[i] + " ");      
+        }
+        
+        return newExp.toString();
+    }
+ 
+    /**
+     * Checks if a string is an integer
+     * @param str string to check
+     * @return boolean if int or not
+     */
+    public static boolean isDigit(String str){
+        try{
+            int i = Integer.parseInt(str);
+        }
+        catch (NumberFormatException e){
+            return false;
+        }
+        return true;
     }
     
     /**
@@ -111,14 +156,14 @@ public class ConvertToPostfix {
             return true;
         return false;
     }
-    
+
     //Test the functionality of the postfix conversion.
     /**
     public static void main(String[] args){
-        String test = "( ( ( ( 5 + 3 ) ) ) ) * ( ( 12 / 3 ) ) ";
+        String test = "1 2 / 4 ";
         ArrayList<String> testPrint = convertToPostfix(test);
         for (String str : testPrint)
             System.out.print(str + " ");
-    }
-    */ 
+    } 
+    */
 }

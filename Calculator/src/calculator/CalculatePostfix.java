@@ -6,7 +6,7 @@ import java.util.*;
  * CalculatePostfix.java
  * CS 480 - Vajda 
  * Lab 3 
- * Last Update: 1 November 2016
+ * Last Update: 3 November 2016
  * @author Bryan Martinez
  */
 public class CalculatePostfix {
@@ -69,14 +69,15 @@ public class CalculatePostfix {
         }
         return result;
     }
-    
+      
     //Quick semantics check
     /**
     public static void main(String[] args){
-        String test = "( ( ( ( 5 ^ ( 9 / 3 ) ) ) ) ) + ( ( 12 * 3 ) ) ";
+        String test = "1 3 + 4 ";
         ArrayList<String> testPrint = ConvertToPostfix.convertToPostfix(test);
         double result = evaluateExpression(testPrint);
         System.out.println(result);
     }
     */
+    
 }

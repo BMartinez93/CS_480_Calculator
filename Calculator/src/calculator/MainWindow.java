@@ -3,18 +3,23 @@ package calculator;
 import java.util.*;
 
 /**
- *
- * @author Dasmann
+ * ConvertToPostfix.java
+ * CS 480 - Vajda 
+ * Lab 3 
+ * Last Update: 3 November 2016
+ * @author Bryan Martinez
  */
 public class MainWindow extends javax.swing.JFrame {
 
     private ArrayList<String> exp = new ArrayList();
+    
      //string to output
     /**
      * Creates new form MainWindow
      */
     public MainWindow() {
         initComponents();
+        allowOps(false);
     }
     
     private String outputString(ArrayList<String> strList){
@@ -22,6 +27,12 @@ public class MainWindow extends javax.swing.JFrame {
         for(String next : strList)
             out.append(next);
         return out.toString();
+    }
+    
+    private static double evaluate(String prefix){
+        ArrayList<String> postfix = ConvertToPostfix.convertToPostfix(prefix);
+        double result = CalculatePostfix.evaluateExpression(postfix);
+        return result;
     }
     
     private void allowOps(boolean bln){
@@ -63,6 +74,9 @@ public class MainWindow extends javax.swing.JFrame {
         equalsButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Bryan's Best Calculator");
+        setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        setResizable(false);
 
         outputLabel.setBackground(new java.awt.Color(255, 255, 255));
         outputLabel.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
@@ -341,14 +355,19 @@ public class MainWindow extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void clearButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearButtonActionPerformed
         exp.clear();
+        outputLabel.setText(outputString(exp));
+        
     }//GEN-LAST:event_clearButtonActionPerformed
 
     private void deleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteButtonActionPerformed
-        exp.remove(exp.size()-1);
+        if (exp.size() != 0)
+            exp.remove(exp.size()-1);
+        outputLabel.setText(outputString(exp));
     }//GEN-LAST:event_deleteButtonActionPerformed
 
     private void powButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_powButtonActionPerformed
@@ -452,7 +471,31 @@ public class MainWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_rightParthButtonActionPerformed
 
     private void equalsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_equalsButtonActionPerformed
-        // TODO add your handling code here:
+        StringBuilder newExp = new StringBuilder();
+        StringBuilder tempNum = new StringBuilder();
+
+        for (int i = 0; i < exp.size(); i++) {
+            newExp.append(exp.get(i) + " ");  
+        }
+
+        try {
+            double result = evaluate(newExp.toString());
+            outputLabel.setText(Double.toString(result));
+        } catch (EmptyStackException e) {
+            outputLabel.setText("Unequal paranthesis");
+        }
+
+        //check for division by 0
+        if (outputLabel.toString().contains("Infinity")
+                || outputLabel.toString().contains("NaN")) {
+            outputLabel.setText("Division by 0");
+            exp.clear();
+        } else {
+            //suround result with parenthesis if user wishes to use again
+            exp.add(0, "(");
+            exp.add(exp.size(), ")");
+        }
+
     }//GEN-LAST:event_equalsButtonActionPerformed
 
     /**
