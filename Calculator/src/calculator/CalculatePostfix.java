@@ -71,10 +71,12 @@ public class CalculatePostfix {
     }
     
     //Quick semantics check
+    /**
     public static void main(String[] args){
         String test = "( ( ( ( 5 ^ ( 9 / 3 ) ) ) ) ) + ( ( 12 * 3 ) ) ";
         ArrayList<String> testPrint = ConvertToPostfix.convertToPostfix(test);
         double result = evaluateExpression(testPrint);
         System.out.println(result);
     }
+    */
 }

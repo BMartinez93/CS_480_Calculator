@@ -113,10 +113,12 @@ public class ConvertToPostfix {
     }
     
     //Test the functionality of the postfix conversion.
+    /**
     public static void main(String[] args){
         String test = "( ( ( ( 5 + 3 ) ) ) ) * ( ( 12 / 3 ) ) ";
         ArrayList<String> testPrint = convertToPostfix(test);
         for (String str : testPrint)
             System.out.print(str + " ");
     }
+    */ 
 }
